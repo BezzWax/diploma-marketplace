@@ -49,7 +49,15 @@ const Auth = observer(() => {
       userStore.setUser(data);
       navigate(SHOP_ROUTE);
     } catch (e) {
-      alert(e.response?.data?.message || "An error occurred");
+      console.log('Ошибка при выполнении запроса:', e);
+      if (e.response && e.response.status === 401) {
+        // Ошибка авторизации: токен истек или недействителен
+        console.log('Токен пользователя истек или недействителен. Перенаправление на страницу входа...');
+        // Ваш код для перенаправления на страницу входа
+      } else {
+        // Обработка других ошибок
+        alert(e.response?.data?.message || "Произошла ошибка");
+      }
     }
   };
   

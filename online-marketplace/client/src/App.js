@@ -1,3 +1,5 @@
+import './App.css';
+
 import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { userStore } from './store/userStore';
@@ -32,8 +34,7 @@ const App = observer(() => {
   return (
     <div>
       <NavBar />
-      <AppRouter classname="my-5" />
-      {/* <Footer /> */}
+      <AppRouter className="m-0" />
     </div>
   );
 });

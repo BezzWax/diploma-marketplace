@@ -5,14 +5,23 @@ import { Card, Col, Container, Image, Row } from 'react-bootstrap';
 import DeviceInfo from './modals/DeviceInfo';
 import GradeIcon from '@mui/icons-material/Grade';
 
+import { fetchOneDevice } from '../http/deviceAPI';
+
 const DeviceItem = observer(() => {
   const { device } = useDeviceStore();
   const [showDeviceInfo, setShowDeviceInfo] = useState(false);
   const [selectedDevice, setSelectedDevice] = useState(null);
+  const [deviceData, setDeviceData] = useState(null);
 
-  const handleDeviceClick = (device) => {
-    setSelectedDevice(device);
-    setShowDeviceInfo(true);
+  const handleDeviceClick = async (device) => {
+    try {
+      const deviceData = await fetchOneDevice(device.id);
+      setSelectedDevice(device);
+      setDeviceData(deviceData);
+      setShowDeviceInfo(true);
+    } catch (error) {
+      console.error('Error fetching device data:', error);
+    }
   };
 
   const handleCloseDeviceInfo = () => {
@@ -23,9 +32,9 @@ const DeviceItem = observer(() => {
     <Container>
       <Row>
         {device.devices.map((device) => (
-          <Col key={device.id} md={3} style={{ display: 'flex', flexDirection: 'column' }}>
+          <Col key={device.id} lg={3} md={6} sm={6} xs={12} style={{ display: 'flex', flexDirection: 'column' }}>
             <Card className='m-3 p-2' style={{ flex: 1 }} onClick={() => handleDeviceClick(device)}>
-              <Image src={process.env.REACT_APP_API_URL + device.img} alt={device.name} fluid />
+              <Image className='d-block mx-auto img-fluid w-50 my-1' width={200} height={200} src={process.env.REACT_APP_API_URL + device.img} alt={device.name} fluid />
               <div>{device.name}</div>
               <div>
                 <label>Rating: </label>
@@ -41,6 +50,7 @@ const DeviceItem = observer(() => {
         show={showDeviceInfo}
         onHide={handleCloseDeviceInfo}
         device={selectedDevice}
+        deviceData={deviceData}
       />
     </Container>
   );
