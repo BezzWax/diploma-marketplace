@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-function EmptyBasket({ handleClose }) {
+const EmptyBasket = ({ handleClose }) => {
   return (
-    <Modal show={true} onHide={handleClose} animation={false}>
+    <Modal show={true} onHide={handleClose} animation={true}>
       <Modal.Header closeButton>
         <Modal.Title>Empty Basket</Modal.Title>
       </Modal.Header>

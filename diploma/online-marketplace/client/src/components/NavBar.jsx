@@ -9,6 +9,8 @@ import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import DevicesIcon from '@mui/icons-material/Devices';
 import logo from '../img/letter-r 512.png'
 import { Image } from 'react-bootstrap';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 import { observer } from 'mobx-react-lite';
 import { UserStoreContext } from '../store/userStore';
@@ -34,13 +36,40 @@ const NavBar = observer(() => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
+
+
+          <OverlayTrigger
+            placement='bottom'
+            overlay={<Tooltip id={`tooltip-bottom`}>Store</Tooltip>}
+          >
             <Nav.Link href="/">
               <ShoppingCartIcon />
             </Nav.Link>
+          </OverlayTrigger>
+
             {userStore.isAuth && (
               <>
+              <OverlayTrigger
+                placement='bottom'
+                overlay={
+                <Tooltip id={`tooltip-bottom`}>
+                  Basket
+                </Tooltip>
+              }
+              >
                 <Nav.Link href="/basket"><ShoppingBasketIcon /></Nav.Link>
+              </OverlayTrigger>
+
+              <OverlayTrigger
+                placement='bottom'
+                overlay={
+                <Tooltip id={`tooltip-bottom`}>
+                  In progress...
+                </Tooltip>
+              }
+              >
                 <Nav.Link href="/device"><DevicesIcon /></Nav.Link>
+              </OverlayTrigger>
               </>
             )}
           </Nav>
